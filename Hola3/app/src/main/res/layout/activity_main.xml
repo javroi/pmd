@@ -1,40 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/degradado"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <EditText
-        android:textColor="#FFFFFF"
-        android:id="@+id/txt_num1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:textColor="#FFFFFF"
-        android:id="@+id/txt_num2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:id="@+id/btn_sum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+" />
-
     <TextView
-        android:id="@+id/lbl_sum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ordenador"/>
-
-
+        android:text="Prueba de saludo"/>
+    <EditText
+        android:id="@+id/cuadroTexto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Escribe aquí"/>
+    <Button
+        android:id="@+id/boton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pulsa aquí"/>
+    <TextView
+        android:id="@+id/texto1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

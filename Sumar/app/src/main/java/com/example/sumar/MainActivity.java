@@ -2,6 +2,7 @@ package com.example.sumar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -29,7 +30,13 @@ public class MainActivity extends AppCompatActivity {
                 num2 = Integer.parseInt(num2_s);
                 sum = num1 + num2;
                 sum_s = String.valueOf(sum);
-                lbl_sumc.setText(sum_s);
+
+                Intent miIntent = new Intent(MainActivity.this, Resultado.class);
+                Bundle miBundle = new Bundle();
+                miBundle.putString("RESULTADO",sum_s);
+                miIntent.putExtras(miBundle);
+                startActivity(miIntent);
+
 
             }
         });
