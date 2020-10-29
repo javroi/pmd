@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Suma2</string>
+    <string name="suma">SUMAR</string>
+    <string name="boton_suma">+</string>
+</resources>
