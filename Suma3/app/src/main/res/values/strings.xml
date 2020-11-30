@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Suma2</string>
+    <string name="suma">SUMAR</string>
+    <string name="boton_suma">+</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
