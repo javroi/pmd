@@ -37,41 +37,29 @@ public class MainActivity extends AppCompatActivity {
     class myCheckBoxChangeClicker implements CheckBox.OnCheckedChangeListener {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked){
-            Boolean cycling = false, teaching = false, blogging = false;
+            String[]mensaje = new String[3];
 
             if(isChecked){
                 if (buttonView == chkBoxCycling){
-                    cycling = true;
+                    mensaje[0]="Cycling";
                 }
-                else{
-                    cycling = false;
-                }
+
                 if (buttonView == chkBoxTeaching){
-                    teaching = true;
+                    mensaje[1]="Teaching";
                 }
-                else{
-                    teaching = false;
-                }
+
                 if (buttonView == chkBoxBlogging){
-                    blogging = true;
+                    mensaje[2]="Blogging";
                 }
-                else{
-                    blogging = false;
-                }
+
             }
-            showTextNotification(cycling,teaching,blogging);
+            showTextNotification(mensaje);
         }
     }
-    public void showTextNotification(Boolean cycling, Boolean teaching,Boolean blogging) {
-        String strMensaje = "";
-        if (cycling){
-            strMensaje+= "cycling";
-        }
-        if (teaching) {
-            strMensaje+= "teaching";
-        }
-        if (blogging){
-            strMensaje+="blogging";
+    public void showTextNotification(String[]mensaje) {
+        String strMensaje="";
+        for (int i = 0; i<3; i++){
+            strMensaje += mensaje[i];
         }
         txtHobby.setText(strMensaje);
     }
