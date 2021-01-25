@@ -17,6 +17,7 @@ public class ShoppingListRepository {
     }
 
     public LiveData<List<ShoppingList>> getAllShoppingLists() {
+
         return mShoppingLists;
     }
 

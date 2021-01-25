@@ -1,4 +1,4 @@
-package com.example.shoppinglist;
+package com.example.shoppinglist.data;
 
 import android.content.Context;
 
@@ -8,12 +8,13 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {ShoppingList.class}, version = 1, exportSchema = false)
+@Database(entities = {ShoppingList.class}, version = 3, exportSchema = false)
 public abstract class ShoppingListDatabase extends RoomDatabase {
-
 
     // Exposición de DAOs
     public abstract ShoppingListDao shoppingListDao();
@@ -34,6 +35,7 @@ public abstract class ShoppingListDatabase extends RoomDatabase {
                             context.getApplicationContext(), ShoppingListDatabase.class,
                             DATABASE_NAME)
                             .addCallback(mRoomCallback)
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
@@ -42,21 +44,29 @@ public abstract class ShoppingListDatabase extends RoomDatabase {
     }
 
     // Prepoblar base de datos con callback
-    private static final RoomDatabase.Callback mRoomCallback = new Callback() {
+    private static final Callback mRoomCallback = new Callback() {
         @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
 
             dbExecutor.execute(() -> {
                 ShoppingListDao dao = INSTANCE.shoppingListDao();
 
-                ShoppingList list1 = new ShoppingList("1", "Lista de ejemplo");
-                ShoppingList list2 = new ShoppingList("2", "Banquete de Navidad");
+                List<ShoppingListInsert> lists = new ArrayList<>();
 
-                dao.insert(list1);
-                dao.insert(list2);
+                for (int i = 0; i < 5; i++) {
+
+                    ShoppingListInsert data = new ShoppingListInsert(
+                            String.valueOf(i),
+                            "Lista " + (i + 1)
+                    );
+
+                    lists.add(data);
+                }
+
+                dao.insertShoppingLists(lists);
             });
         }
     };
-}
 
+}
