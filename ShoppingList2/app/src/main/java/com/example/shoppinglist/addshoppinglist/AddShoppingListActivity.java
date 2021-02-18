@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.shoppinglist.*;
-import com.example.shoppinglist.data.ShoppingListInsert;
+import com.example.shoppinglist.data.partialentities.ShoppingListInsert;
 import com.example.shoppinglist.shoppinglists.ShoppingListViewModel;
 
 import java.util.UUID;
@@ -33,7 +33,7 @@ public class AddShoppingListActivity extends AppCompatActivity {
         findViewById(R.id.create_button).setOnClickListener(
                 view -> {
                     // Obtener valor del campo de texto
-                    EditText nameField =  findViewById(R.id.name_field);
+                    EditText nameField = findViewById(R.id.name_field);
                     String name = nameField.getText().toString();
 
                     // Ignorar acción si hay 0 caracteres

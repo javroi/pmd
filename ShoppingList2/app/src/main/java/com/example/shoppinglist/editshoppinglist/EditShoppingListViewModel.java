@@ -8,8 +8,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.example.shoppinglist.data.ShoppingList;
 import com.example.shoppinglist.data.ShoppingListRepository;
+import com.example.shoppinglist.data.relationentities.ShoppingListWithItems;
 
 public class EditShoppingListViewModel extends AndroidViewModel {
 
@@ -17,7 +17,7 @@ public class EditShoppingListViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> mShoppingListId = new MutableLiveData<>();
 
-    private final LiveData<ShoppingList> mShoppingList;
+    private final LiveData<ShoppingListWithItems> mShoppingList;
 
     public EditShoppingListViewModel(@NonNull Application application) {
         super(application);
@@ -35,7 +35,8 @@ public class EditShoppingListViewModel extends AndroidViewModel {
         mShoppingListId.setValue(id);
     }
 
-    public LiveData<ShoppingList> getShoppingList() {
+    public LiveData<ShoppingListWithItems> getShoppingList() {
         return mShoppingList;
     }
 }
+

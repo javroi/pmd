@@ -1,11 +1,14 @@
-package com.example.shoppinglist.data;
+package com.example.shoppinglist.data.partialentities;
+
+import androidx.room.ColumnInfo;
 
 import java.util.Random;
 
 public class ShoppingListInsert {
-    String id;
-    String name;
-    String category = generateCategory();
+    @ColumnInfo(name = "shopping_list_id")
+    public String id;
+    public String name;
+    public String category = generateCategory();
 
     public ShoppingListInsert(String id, String name) {
         this.id = id;

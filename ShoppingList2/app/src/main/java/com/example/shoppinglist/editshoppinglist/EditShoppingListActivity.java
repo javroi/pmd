@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shoppinglist.*;
 
@@ -12,6 +13,9 @@ public class EditShoppingListActivity extends AppCompatActivity {
 
     public static final String EXTRA_SHOPPING_LIST_ID = "com.develou.shoppinglist.shoppingListId";
     private EditShoppingListViewModel mViewModel;
+    private ActionBar mActionBar;
+    private RecyclerView mItemsList;
+    private ItemAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,16 +35,28 @@ public class EditShoppingListActivity extends AppCompatActivity {
         mViewModel.start(id);
 
         setupActionBar();
+        setupItemsList();
+        subscribeToUi();
+    }
+
+    private void subscribeToUi() {
+        mViewModel.getShoppingList().observe(this,
+                shoppingList -> {
+                    mActionBar.setTitle(shoppingList.shoppingList.name);
+                    mAdapter.setItems(shoppingList.items);
+                }
+        );
     }
 
     private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+        mActionBar = getSupportActionBar();
+        mActionBar.setDisplayHomeAsUpEnabled(true);
+    }
 
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
-        mViewModel.getShoppingList().observe(this,
-                shoppingList -> actionBar.setTitle(shoppingList.getName())
-        );
+    private void setupItemsList() {
+        mItemsList = findViewById(R.id.items_list);
+        mAdapter = new ItemAdapter();
+        mItemsList.setAdapter(mAdapter);
     }
 
     @Override

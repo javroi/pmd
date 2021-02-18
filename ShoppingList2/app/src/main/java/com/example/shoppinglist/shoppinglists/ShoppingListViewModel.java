@@ -9,11 +9,18 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.example.shoppinglist.data.ShoppingListInsert;
+import com.example.shoppinglist.Utils;
 import com.example.shoppinglist.data.ShoppingListRepository;
+import com.example.shoppinglist.data.entities.Collaborator;
+import com.example.shoppinglist.data.entities.Info;
+import com.example.shoppinglist.data.entities.Item;
+import com.example.shoppinglist.data.partialentities.ShoppingListId;
+import com.example.shoppinglist.data.partialentities.ShoppingListInsert;
+import com.example.shoppinglist.data.relationentities.ShoppingListWithCollaborators;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ShoppingListViewModel extends AndroidViewModel {
 
@@ -25,7 +32,7 @@ public class ShoppingListViewModel extends AndroidViewModel {
             = new MutableLiveData<>(new ArrayList<>());
 
     // Listas de compras observadas
-    private final LiveData<List<ShoppingListForList>> mShoppingLists;
+    private final LiveData<List<ShoppingListWithCollaborators>> mShoppingLists;
 
     // Filtros
     private final List<String> mFilters = new ArrayList<>();
@@ -48,7 +55,27 @@ public class ShoppingListViewModel extends AndroidViewModel {
     }
 
     public void insert(ShoppingListInsert shoppingList) {
-        mRepository.insert(shoppingList);
+        String infoCreatedDate = Utils.getCurrentDate();
+        String colaboratorId = UUID.randomUUID().toString();
+        String itemId = UUID.randomUUID().toString();
+
+        // Preparar info
+        Info info = new Info(shoppingList.id,
+                infoCreatedDate, infoCreatedDate);
+
+        // Preparar colaboradores
+        Collaborator collaborator = new Collaborator(colaboratorId,
+                "C-" + colaboratorId, shoppingList.id);
+        List<Collaborator> collaborators = new ArrayList<>();
+        collaborators.add(collaborator);
+
+        // Preparar items
+        Item item = new Item(itemId, "Ejemplo");
+        List<Item> items = new ArrayList<>();
+        items.add(item);
+
+        // Insertar en repositorio
+        mRepository.insert(shoppingList, info, collaborators, items);
     }
 
     public void addFilter(String category) {
@@ -61,7 +88,20 @@ public class ShoppingListViewModel extends AndroidViewModel {
         mCategories.setValue(mFilters);
     }
 
-    public LiveData<List<ShoppingListForList>> getShoppingLists() {
+    public LiveData<List<ShoppingListWithCollaborators>> getShoppingLists() {
         return mShoppingLists;
+    }
+
+    public void markFavorite(String shoppingListId) {
+        mRepository.markFavorite(shoppingListId);
+    }
+
+    public void deleteShoppingList(ShoppingListWithCollaborators shoppingList) {
+        ShoppingListId id = new ShoppingListId(shoppingList.shoppingList.id);
+        mRepository.deleteShoppingList(id);
+    }
+
+    public void deleteAll() {
+        mRepository.deleteAll();
     }
 }
